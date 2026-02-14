@@ -18,6 +18,8 @@ class Settings(BaseSettings):
 
     # SMS/Telegram
     TELEGRAM_BOT_TOKEN: str = ""
+    # Added this line to fix the validation error:
+    TELEGRAM_CHAT_ID: Optional[str] = None
     
     # SMS (Optional)
     TWILIO_ACCOUNT_SID: Optional[str] = None
@@ -38,5 +40,7 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         case_sensitive = True
+        # This prevents the app from crashing if extra variables are in .env
+        extra = "ignore"
 
 settings = Settings()
