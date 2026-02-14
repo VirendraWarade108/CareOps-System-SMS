@@ -9,6 +9,7 @@ from typing import List
 
 from app import models
 from app.services.email_service import get_email_service
+from app.services.sms_service import get_sms_service
 
 
 class AutomationService:
@@ -36,6 +37,10 @@ class AutomationService:
             try:
                 email_service = get_email_service(booking.workspace_id, self.db)
                 email_service.send_booking_reminder(booking)
+
+                # Send SMS reminder
+                sms_service = get_sms_service(booking.workspace_id, self.db)
+                sms_service.send_booking_reminder(booking)
                 
                 booking.reminder_sent = True
                 self.db.commit()
@@ -66,6 +71,10 @@ class AutomationService:
                 if booking:
                     email_service = get_email_service(booking.workspace_id, self.db)
                     email_service.send_form_reminder(submission)
+
+                    # Send SMS reminder
+                    sms_service = get_sms_service(booking.workspace_id, self.db)
+                    sms_service.send_form_reminder(submission)
                     
                     submission.reminder_sent_at = datetime.now()
                     self.db.commit()
@@ -110,6 +119,13 @@ class AutomationService:
                 if item.vendor_email:
                     email_service = get_email_service(item.workspace_id, self.db)
                     email_service.send_low_stock_alert(item)
+
+                # Send SMS alert to workspace admin
+                try:
+                    sms_service = get_sms_service(item.workspace_id, self.db)
+                    sms_service.send_low_stock_alert(item)
+                except Exception as e:
+                    print(f"⚠️ Failed to send SMS alert: {str(e)}")
                 
                 self.db.commit()
                 

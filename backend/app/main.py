@@ -10,9 +10,11 @@ import atexit
 from app.database import get_db, Base, engine
 from app.config import settings
 from app import models, schemas
+from app.routes import sms_routes
 from app.utils.security import verify_password, get_password_hash, create_access_token, decode_access_token
 from app.services.email_service import get_email_service
 from app.services.automation_service import get_automation_service
+from app.services.sms_service import get_sms_service
 from app.scheduler import start_scheduler, stop_scheduler
 
 # Create all tables
@@ -23,6 +25,9 @@ app = FastAPI(
     description="Unified Operations Platform for Service Businesses",
     version="1.0.0"
 )
+
+# Include SMS routes
+app.include_router(sms_routes.router)
 
 # CORS middleware
 app.add_middleware(
@@ -675,6 +680,13 @@ def create_booking(
         email_service.send_booking_confirmation(db_booking)
     except Exception as e:
         print(f"⚠️ Failed to send booking confirmation: {str(e)}")
+
+    # Send confirmation SMS
+    try:
+        sms_service = get_sms_service(workspace_id, db)
+        sms_service.send_booking_confirmation(db_booking)
+    except Exception as e:
+        print(f"⚠️ Failed to send SMS confirmation: {str(e)}")
     
     return db_booking
 

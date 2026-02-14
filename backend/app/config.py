@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     SMTP_PORT: int = 587
     SMTP_USER: str
     SMTP_PASSWORD: str
+
+    # SMS/Telegram
+    TELEGRAM_BOT_TOKEN: str = ""
     
     # SMS (Optional)
     TWILIO_ACCOUNT_SID: Optional[str] = None
