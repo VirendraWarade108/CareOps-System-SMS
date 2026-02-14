@@ -17,7 +17,8 @@ class UserBase(BaseModel):
     full_name: Optional[str] = None
 
 class UserCreate(UserBase):
-    password: str = Field(..., min_length=8)
+    # Added max_length=72 to prevent server crash on hashing
+    password: str = Field(..., min_length=8, max_length=72)
     role: str = Field(default="owner")
 
 class UserLogin(BaseModel):
