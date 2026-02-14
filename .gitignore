@@ -1,0 +1,118 @@
+# ============================================
+# CAREOPS PLATFORM - .gitignore
+# ============================================
+
+# ==================
+# SECRETS & ENV FILES (NEVER commit these)
+# ==================
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+*.env
+
+# ==================
+# PYTHON / BACKEND
+# ==================
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+
+# Python egg / dist
+*.egg-info/
+dist/
+build/
+eggs/
+*.egg
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+
+# ==================
+# NODE / FRONTEND
+# ==================
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Next.js cache
+.swc/
+
+# Production build
+build/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# ==================
+# EDITORS & OS
+# ==================
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains (PyCharm, WebStorm)
+.idea/
+*.iml
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ==================
+# LOGS
+# ==================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==================
+# MISC
+# ==================
+# Zip files
+*.zip
+*.tar.gz
+
+# Local dev certificates
+*.pem
+*.key
+*.cert
+
+# Coverage reports
+coverage/
+.nyc_output/
+package-lock.json
